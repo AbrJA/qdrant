@@ -18,8 +18,13 @@ Collection <- R6::R6Class(
         httr2::req_url_path_append(name) |>
         httr2::req_url_path_append("aliases")
     },
-    create = function(vectors, init_from) {
-
+    create = function(name, config, init_from = NULL) {
+      checkmate::assert_multi_class(config, classes = c("config", "params"))
+      private$.req |>
+        httr2::req_url_path_append(name) |>
+        httr2::req_body_json(config, force = TRUE) |>
+        httr2::req_method("PUT") |>
+        httr2::req_perform()
     },
     delete = function(name) {
       checkmate::assert_string(name, min.chars = 1L)

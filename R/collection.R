@@ -16,7 +16,9 @@ Collection <- R6::R6Class(
       checkmate::assert_string(name, min.chars = 1L)
       private$.req |>
         httr2::req_url_path_append(name) |>
-        httr2::req_url_path_append("aliases")
+        httr2::req_url_path_append("aliases") |>
+        httr2::req_perform() |>
+        httr2::resp_body_json()
     },
     create = function(name,
                       ...,
@@ -100,36 +102,49 @@ Collection <- R6::R6Class(
         config$quantization_config <- quantization_config
       }
 
+      if (!checkmate::test_null(init_from)) {
+        checkmate::assert_string(init_from, min.chars = 1L)
+        config$init_from <- init_from
+      }
+
       private$.req |>
         httr2::req_url_path_append(name) |>
         httr2::req_body_json(config, force = TRUE) |>
         httr2::req_method("PUT") |>
-        httr2::req_perform()
+        httr2::req_perform() |>
+        httr2::resp_body_json()
       # |> _$result
+    },
+    update = function(name) {
+      checkmate::assert_string(name, min.chars = 1L)
     },
     delete = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
       private$.req |>
         httr2::req_url_path_append(name) |>
         httr2::req_method("DELETE") |>
-        httr2::req_perform()
+        httr2::req_perform() |>
+        httr2::resp_body_json()
     },
     exists = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
       private$.req |>
         httr2::req_url_path_append(name) |>
         httr2::req_url_path_append("exists") |>
-        httr2::req_perform()
+        httr2::req_perform() |>
+        httr2::resp_body_json()
     },
     info = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
       private$.req |>
         httr2::req_url_path_append(name) |>
-        httr2::req_perform()
+        httr2::req_perform() |>
+        httr2::resp_body_json()
     },
     list = function() {
       private$.req |>
-        httr2::req_perform()
+        httr2::req_perform() |>
+        httr2::resp_body_json()
     }
   ),
   private = list(

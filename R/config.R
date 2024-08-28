@@ -51,7 +51,7 @@ scalar <- function(type = c("int8"), quantile = NULL, always_ram = NULL) {
     config$always_ram <- always_ram
   }
 
-  structure(config, class = c("config", "scalar"))
+  structure(list(scalar = config), class = c("config", "quantization"))
 }
 
 #' @export
@@ -67,7 +67,7 @@ product <- function(compression = c("x4", "x8", "x16", "x32", "x64"), always_ram
     config$always_ram <- always_ram
   }
 
-  structure(config, class = c("config", "product"))
+  structure(list(product = config), class = c("config", "quantization"))
 }
 
 #' @export
@@ -80,31 +80,7 @@ binary <- function(always_ram = NULL) {
     config$always_ram <- always_ram
   }
 
-  structure(config, class = c("config", "binary"))
-}
-
-#' @export
-#'
-#' Comment: Just one of them
-quantization <- function(binary = NULL, product = NULL, scalar = NULL) {
-  config <- list()
-
-  if (!checkmate::test_null(binary)) {
-    checkmate::assert_class(binary, classes = c("config", "binary"))
-    config$binary <- binary
-  }
-
-  if (!checkmate::test_null(product)) {
-    checkmate::assert_class(product, classes = c("config", "product"))
-    config$product <- product
-  }
-
-  if (!checkmate::test_null(scalar)) {
-    checkmate::assert_class(scalar, classes = c("config", "scalar"))
-    config$scalar <- scalar
-  }
-
-  structure(config, class = c("config", "quantization"))
+  structure(list(binary = config), class = c("config", "quantization"))
 }
 
 #' @export
@@ -178,57 +154,6 @@ multivector <- function(comparator = c("max_sim")) {
 
   structure(config, class = c("config", "multivector"))
 }
-
-#' @export
-#'
-vectors <- function(...) {
-  args <- list(...)
-  args <- lapply(args, checkmate::assert_class, classes = c("params", "vector"))
-
-  if (checkmate::test_list(args, names = "unnamed", len = 1L)) {
-    return(structure(args[[1]], class = c("config", "vectors")))
-  }
-
-  checkmate::assert_list(args, names = "named")
-
-  structure(args, class = c("config", "vectors"))
-}
-
-#' @export
-#'
-collections <- function(collection,
-                        hnsw_config = NULL,
-                        optimizer_config = NULL,
-                        wal_config = NULL,
-                        quantization_config = NULL) {
-  config <- list()
-
-  checkmate::assert_class(collection, classes = c("params", "collection"))
-  config <- collection
-
-  if (!checkmate::test_null(hnsw_config)) {
-    checkmate::assert_class(hnsw_config, classes = c("config", "hnsw"))
-    config$hnsw_config <- hnsw_config
-  }
-
-  if (!checkmate::test_null(optimizer_config)) {
-    checkmate::assert_class(optimizer_config, classes = c("config", "optimizer"))
-    config$optimizer_config <- optimizer_config
-  }
-
-  if (!checkmate::test_null(wal_config)) {
-    checkmate::assert_class(wal_config, classes = c("config", "wal"))
-    config$wal_config <- wal_config
-  }
-
-  if (!checkmate::test_null(quantization_config)) {
-    checkmate::assert_class(quantization_config, classes = c("config", "quantization"))
-    config$quantization_config <- quantization_config
-  }
-
-  structure(config, class = c("config", "collection"))
-}
-
 
 #' @export
 #'

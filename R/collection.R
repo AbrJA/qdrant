@@ -105,6 +105,7 @@ Collection <- R6::R6Class(
         httr2::req_body_json(config, force = TRUE) |>
         httr2::req_method("PUT") |>
         httr2::req_perform()
+      # |> _$result
     },
     delete = function(name) {
       checkmate::assert_string(name, min.chars = 1L)

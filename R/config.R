@@ -162,6 +162,35 @@ multivector <- function(comparator = c("max_sim")) {
   structure(config, class = c("config", "multivector"))
 }
 
+params <- function(replication_factor = NULL,
+                   write_consistency_factor = NULL,
+                   read_fan_out_factor = NULL,
+                   on_disk_payload = NULL) {
+  config <- list()
+
+  if (!checkmate::test_null(replication_factor)) {
+    checkmate::assert_int(replication_factor, lower = 1L)
+    config$replication_factor <- as.integer(replication_factor)
+  }
+
+  if (!checkmate::test_null(write_consistency_factor)) {
+    checkmate::assert_int(write_consistency_factor, lower = 1L)
+    config$write_consistency_factor <- as.integer(write_consistency_factor)
+  }
+
+  if (!checkmate::test_null(read_fan_out_factor)) {
+    checkmate::assert_int(read_fan_out_factor, lower = 0L)
+    config$read_fan_out_factor <- as.integer(read_fan_out_factor)
+  }
+
+  if (!checkmate::test_null(on_disk_payload)) {
+    checkmate::assert_flag(on_disk_payload)
+    config$on_disk_payload <- on_disk_payload
+  }
+
+  structure(config, class = c("config", "params"))
+}
+
 #' @export
 #'
 print.config <- function(object, indent = 1L, first = TRUE) {

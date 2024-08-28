@@ -8,9 +8,11 @@
 Collection <- R6::R6Class(
   classname = "Collection",
   public = list(
+    alias = NULL,
     initialize = function(req) {
       private$.req <- req |>
         httr2::req_url_path_append("collections")
+      self$alias <- AliasCollection$new(private$.req)
     },
     aliases = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
@@ -33,7 +35,8 @@ Collection <- R6::R6Class(
                       optimizer_config = NULL,
                       wal_config = NULL,
                       quantization_config = NULL,
-                      init_from = NULL) {
+                      init_from = NULL,
+                      timeout = 10L) {
 
       config <- list()
 
@@ -109,14 +112,29 @@ Collection <- R6::R6Class(
 
       private$.req |>
         httr2::req_url_path_append(name) |>
+        httr2::req_url_query(timeout = timeout) |>
         httr2::req_body_json(config, force = TRUE) |>
         httr2::req_method("PUT") |>
         httr2::req_perform() |>
         httr2::resp_body_json()
       # |> _$result
     },
-    update = function(name) {
-      checkmate::assert_string(name, min.chars = 1L)
+    update = function(name,
+                      ...,
+                      params = NULL,
+                      sparse_vectors = NULL,
+                      hnsw_config = NULL,
+                      optimizer_config = NULL,
+                      quantization_config = NULL,
+                      timeout = 10L) {
+      # private$.req |>
+      #   httr2::req_url_path_append(name) |>
+      #   httr2::req_url_query(timeout = timeout) |>
+      #   httr2::req_body_json(config, force = TRUE) |>
+      #   httr2::req_method("PATCH") |>
+      #   httr2::req_perform() |>
+      #   httr2::resp_body_json()
+      stop("Not implemented yet!")
     },
     delete = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
@@ -152,11 +170,27 @@ Collection <- R6::R6Class(
   )
 )
 
-Alias <- R6::R6Class(
+AliasCollection <- R6::R6Class(
   classname = "Alias",
   public = list(
+    initialize = function(req) {
+      private$.req <- req |>
+        httr2::req_url_path_append("aliases")
+      },
+    update = function(...) {
+      actions <- list(...)
+      actions <- lapply(actions, checkmate::assert_class, classes = c("operation", "alias"))
 
-  )
+      private$.req |>
+        httr2::req_body_json(list(actions = actions), force = TRUE) |>
+        httr2::req_method("POST") |>
+        httr2::req_perform() |>
+        httr2::resp_body_json()
+      }
+    ),
+    private = list(
+      .req = NULL
+    )
 )
 
 Snapshot <- R6::R6Class(

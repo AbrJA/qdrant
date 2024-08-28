@@ -39,10 +39,10 @@ client$collection$list()
 client$collection$info("test")
 ```
 
-### Update collection parameters
+### Update collection parameters (not implemented yet)
 
 ```
-
+client$collection$update("test", ...)
 ```
 
 ### List aliases for collection
@@ -56,6 +56,57 @@ client$collection$aliases("test")
 ```
 client$collection$delete("test")
 ```
+
+### Update aliases of the collections
+
+```
+client$collection$alias$update(create_alias("test", "test_one"))
+client$collection$alias$update(create_alias("test_one", "test_two"), delete_alias("test_two"))
+```
+
+### List collections aliases
+
+```
+client$alias$list()
+```
+
+### 
+
+```
+
+```
+
+### 
+
+```
+
+```
+
+### 
+
+```
+
+```
+
+### 
+
+```
+
+```
+
+### 
+
+```
+
+```
+
+### 
+
+```
+
+```
+
+### 
 
 ```
 

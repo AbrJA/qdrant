@@ -12,7 +12,7 @@ Collection <- R6::R6Class(
     initialize = function(req) {
       private$.req <- req |>
         httr2::req_url_path_append("collections")
-      self$alias <- AliasCollection$new(private$.req)
+      self$alias <- Alias$new(private$.req)
     },
     aliases = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
@@ -170,7 +170,7 @@ Collection <- R6::R6Class(
   )
 )
 
-AliasCollection <- R6::R6Class(
+Alias <- R6::R6Class(
   classname = "Alias",
   public = list(
     initialize = function(req) {

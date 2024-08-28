@@ -18,8 +18,19 @@ Client <- R6::R6Class(
         private$.req <- private$.req |>
           httr2::req_headers("api-key" = api_key)
       }
-      self$alias <- AliasClient$new(private$.req)
       self$collection <- Collection$new(private$.req)
+    },
+    aliases = function() {
+      private$.req |>
+        httr2::req_url_path_append("aliases") |>
+        httr2::req_perform() |>
+        httr2::resp_body_json()
+    },
+    collections = function() {
+      private$.req |>
+        httr2::req_url_path_append("collections") |>
+        httr2::req_perform() |>
+        httr2::resp_body_json()
     }
   ),
   active = list(
@@ -35,24 +46,5 @@ Client <- R6::R6Class(
   private = list(
     .req = NULL,
     .url = NULL
-  )
-)
-
-
-AliasClient <- R6::R6Class(
-  classname = "Alias",
-  public = list(
-    initialize = function(req) {
-      private$.req <- req |>
-        httr2::req_url_path_append("aliases")
-    },
-    list = function() {
-      private$.req |>
-        httr2::req_perform() |>
-        httr2::resp_body_json()
-    }
-  ),
-  private = list(
-    .req = NULL
   )
 )

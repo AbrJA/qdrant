@@ -18,6 +18,18 @@ library(qdrant)
 client <- Client$new("http://localhost:6333/")
 ```
 
+### List collections
+
+```
+client$collections()
+```
+
+### List collections aliases
+
+```
+client$aliases()
+```
+
 ### Create collection
 
 ```
@@ -25,12 +37,6 @@ client$collection$create(name = "test",
                          image = vector(240, "Cosine", quantization_config = product("x4", TRUE)),
                          texto = vector(64, "Dot", datatype = "float16"), 
                          quantization_config = binary(TRUE))
-```
-
-### List collections
-
-```
-client$collection$list() 
 ```
 
 ### Collection info
@@ -62,12 +68,6 @@ client$collection$delete("test")
 ```
 client$collection$alias$update(create_alias("test", "test_one"))
 client$collection$alias$update(create_alias("test_one", "test_two"), delete_alias("test_two"))
-```
-
-### List collections aliases
-
-```
-client$alias$list()
 ```
 
 ### 

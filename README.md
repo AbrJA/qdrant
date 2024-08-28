@@ -5,7 +5,7 @@ Client implementation to interact with [qdrant](https://github.com/qdrant/qdrant
 ## Installation
 
 ```
-devtools::install("AbrJA/qdrant")
+remotes::install_github("AbrJA/qdrant@progress")
 ```
 
 ## Usage

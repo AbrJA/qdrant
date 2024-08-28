@@ -31,6 +31,54 @@ Client <- R6::R6Class(
         httr2::req_url_path_append("collections") |>
         httr2::req_perform() |>
         httr2::resp_body_json()
+    },
+    snapshots = function() {
+      private$.req |>
+        httr2::req_url_path_append("snapshots") |>
+        httr2::req_perform() |>
+        httr2::resp_body_json()
+    },
+    info = function() {
+      private$.req |>
+        httr2::req_perform() |>
+        httr2::resp_body_json()
+    },
+    telemetry = function() {
+      private$.req |>
+        httr2::req_url_path_append("telemetry") |>
+        httr2::req_perform() |>
+        httr2::resp_body_json()
+    },
+    metrics = function() {
+      private$.req |>
+        httr2::req_url_path_append("metrics") |>
+        httr2::req_perform() |>
+        httr2::resp_body_string()
+    },
+    # Add SET POST option
+    locks = function() {
+      private$.req |>
+        httr2::req_url_path_append("locks") |>
+        httr2::req_perform() |>
+        httr2::resp_body_json()
+    },
+    healthz = function() {
+      private$.req |>
+        httr2::req_url_path_append("healthz") |>
+        httr2::req_perform() |>
+        httr2::resp_body_string()
+    },
+    livez = function() {
+      private$.req |>
+        httr2::req_url_path_append("livez") |>
+        httr2::req_perform() |>
+        httr2::resp_body_string()
+    },
+    readyz = function() {
+      private$.req |>
+        httr2::req_url_path_append("readyz") |>
+        httr2::req_perform() |>
+        httr2::resp_body_string()
     }
   ),
   active = list(

@@ -18,6 +18,48 @@ library(qdrant)
 client <- Client$new("http://localhost:6333/")
 ```
 
+### Info about the running Qdrant instance
+
+```
+client$info()
+```
+
+### Collect telemetry data
+
+```
+client$telemetry()
+```
+
+### Collect Prometheus metrics data
+
+```
+client$metrics()
+```
+
+### Get lock options (Set lock options not implemented yet!)
+
+```
+client$locks()
+```
+
+### Kubernetes healthz endpoint
+
+```
+client$healthz()
+```
+
+### Kubernetes livez endpoint
+
+```
+client$livez()
+```
+
+### Kubernetes readyz endpoint
+
+```
+client$readyz()
+```
+
 ### List collections
 
 ```
@@ -67,10 +109,10 @@ client$collection$delete("test")
 
 ```
 client$collection$alias$update(create_alias("test", "test_one"))
-client$collection$alias$update(create_alias("test_one", "test_two"), delete_alias("test_two"))
+client$collection$alias$update(rename_alias("test_one", "test_two"), delete_alias("test_two"))
 ```
 
-### 
+### List of storage snapshots
 
 ```
 

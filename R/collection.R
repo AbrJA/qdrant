@@ -193,6 +193,26 @@ Alias <- R6::R6Class(
     )
 )
 
+Cluster <- R6::R6Class(
+  classname = "Cluster",
+  public = list(
+
+  ),
+  private = list(
+
+  )
+)
+
+Index <- R6::R6Class(
+  classname = "Index",
+  public = list(
+
+  ),
+  private = list(
+
+  )
+)
+
 Snapshot <- R6::R6Class(
   classname = "Snapshot",
   public = list(

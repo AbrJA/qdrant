@@ -10,22 +10,53 @@ remotes::install_github("AbrJA/qdrant@progress")
 
 ## Usage
 
+### Initialize client
+
 ```
 library(qdrant)
 
 client <- Client$new("http://localhost:6333/")
+```
 
-client$collection$list() 
+### Create collection
 
-client$collection$delete("test")
-
+```
 client$collection$create(name = "test", 
                          image = vector(240, "Cosine", quantization_config = product("x4", TRUE)),
                          texto = vector(64, "Dot", datatype = "float16"), 
                          quantization_config = binary(TRUE))
+```
 
-client$collection$info("test") 
+### List collections
 
-client$collection$exists("test") |>
-  httr2::resp_body_json()
+```
+client$collection$list() 
+```
+
+### Collection info
+
+```
+client$collection$info("test")
+```
+
+### Update collection parameters
+
+```
+
+```
+
+### List aliases for collection
+
+```
+client$collection$aliases("test")
+```
+
+### Delete collection
+
+```
+client$collection$delete("test")
+```
+
+```
+
 ```

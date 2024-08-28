@@ -74,6 +74,8 @@ client$collections()
 client$aliases()
 ```
 
+### Collections
+
 #### Create collection
 
 ```

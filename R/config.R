@@ -1,3 +1,10 @@
+#' @description Config of HNSW index
+#' @param m integer. Number of edges per node in the index graph. Larger the value - more accurate the search, more space required. Default to NULL.
+#' @param ef_construct
+#' @param full_scan_threshold max_indexing_threads
+#' @param on_disk
+#' @param payload_m
+#'
 #' @export
 #'
 hnsw <- function(m,

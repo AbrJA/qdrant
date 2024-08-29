@@ -26,7 +26,7 @@ client <- Client$new("http://localhost:6333/")
 client$info()
 ```
 
-### Get cluster status info
+#### Get cluster status info
 
 ```
 client$cluster()

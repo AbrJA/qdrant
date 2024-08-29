@@ -20,10 +20,16 @@ client <- Client$new("http://localhost:6333/")
 
 ### Service
 
-#### Info about the running Qdrant instance
+#### Returns information about the running Qdrant instance
 
 ```
 client$info()
+```
+
+### Get cluster status info
+
+```
+client$cluster()
 ```
 
 #### Collect telemetry data
@@ -74,6 +80,12 @@ client$collections()
 client$aliases()
 ```
 
+#### List of storage snapshots
+
+```
+client$snapshots()
+```
+
 ### Collections
 
 #### Create collection
@@ -116,12 +128,6 @@ client$collection$alias$update(create_alias("test", "test_one"))
 client$collection$alias$update(rename_alias("test_one", "test_two"), delete_alias("test_two"))
 ```
 
-#### List of storage snapshots
-
-```
-
-```
-
 #### 
 
 ```
@@ -140,20 +146,22 @@ client$collection$alias$update(rename_alias("test_one", "test_two"), delete_alia
 
 ```
 
-#### 
+### Snapshots
+
+#### Create storage snapshot
 
 ```
-
+client$snapshot$create()
 ```
 
-#### 
+#### Download storage snapshot
 
 ```
-
+client$snapshot$download(name, "./snapshot.snapshot")
 ```
 
-#### 
+#### Delete storage snapshot
 
 ```
-
+client$snapshot$delete(name)
 ```

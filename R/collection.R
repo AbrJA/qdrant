@@ -14,6 +14,10 @@ Collection <- R6::R6Class(
         httr2::req_url_path_append("collections")
       self$alias <- Alias$new(private$.req)
     },
+    #' @description
+    #' List the collection alias
+    #' @param name string. Collection name
+    #'
     aliases = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
       private$.req |>
@@ -22,6 +26,10 @@ Collection <- R6::R6Class(
         httr2::req_perform() |>
         httr2::resp_body_json()
     },
+    #' @description
+    #' ...
+    #' @param name string. Collection name
+    #'
     create = function(name,
                       ...,
                       shard_number = NULL,
@@ -119,6 +127,10 @@ Collection <- R6::R6Class(
         httr2::resp_body_json()
       # |> _$result
     },
+    #' @description
+    #' ...
+    #' @param name string. Collection name
+    #'
     update = function(name,
                       ...,
                       params = NULL,
@@ -136,6 +148,10 @@ Collection <- R6::R6Class(
       #   httr2::resp_body_json()
       stop("Not implemented yet!")
     },
+    #' @description
+    #' ...
+    #' @param name string. Collection name
+    #'
     delete = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
       private$.req |>
@@ -144,6 +160,10 @@ Collection <- R6::R6Class(
         httr2::req_perform() |>
         httr2::resp_body_json()
     },
+    #' @description
+    #' ...
+    #' @param name string. Collection name
+    #'
     exists = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
       private$.req |>
@@ -152,15 +172,14 @@ Collection <- R6::R6Class(
         httr2::req_perform() |>
         httr2::resp_body_json()
     },
+    #' @description
+    #' ...
+    #' @param name string. Collection name
+    #'
     info = function(name) {
       checkmate::assert_string(name, min.chars = 1L)
       private$.req |>
         httr2::req_url_path_append(name) |>
-        httr2::req_perform() |>
-        httr2::resp_body_json()
-    },
-    list = function() {
-      private$.req |>
         httr2::req_perform() |>
         httr2::resp_body_json()
     }
@@ -210,15 +229,5 @@ Index <- R6::R6Class(
   ),
   private = list(
 
-  )
-)
-
-Snapshot <- R6::R6Class(
-  classname = "Snapshot",
-  public = list(
-    list = function() {
-      private$.req |>
-        httr2::req_perform()
-    }
   )
 )

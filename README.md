@@ -128,24 +128,6 @@ client$collection$alias$update(create_alias("test", "test_one"))
 client$collection$alias$update(rename_alias("test_one", "test_two"), delete_alias("test_two"))
 ```
 
-#### 
-
-```
-
-```
-
-#### 
-
-```
-
-```
-
-#### 
-
-```
-
-```
-
 ### Snapshots
 
 #### Create storage snapshot
@@ -164,4 +146,22 @@ client$snapshot$download(name, "./snapshot.snapshot")
 
 ```
 client$snapshot$delete(name)
+```
+
+### Point
+
+```
+
+```
+
+#### 
+
+```
+
+```
+
+#### 
+
+```
+
 ```

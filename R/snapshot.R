@@ -9,10 +9,12 @@ Snapshot <- R6::R6Class(
   classname = "Snapshot",
   public = list(
     initialize = function(req) {
+
       private$.req <- req |>
         httr2::req_url_path_append("snapshots")
     },
     create = function(wait = TRUE) {
+
       checkmate::assert_flag(wait)
 
       private$.req |>
@@ -23,6 +25,7 @@ Snapshot <- R6::R6Class(
         httr2::resp_body_json()
     },
     download = function(name, path) {
+
       checkmate::assert_string(name, min.chars = 1L)
       checkmate::assert_string(path, min.chars = 1L)
 
@@ -32,6 +35,7 @@ Snapshot <- R6::R6Class(
         httr2::req_perform(path = path)
     },
     delete = function(name, wait = TRUE) {
+
       checkmate::assert_string(name, min.chars = 1L)
       checkmate::assert_flag(wait)
 

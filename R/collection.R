@@ -120,7 +120,7 @@ Collection <- R6::R6Class(
 
       private$.req |>
         httr2::req_url_path_append(name) |>
-        httr2::req_url_query(timeout = timeout) |>
+        httr2::req_url_query(timeout = checkmate::asInt(timeout)) |>
         httr2::req_body_json(config, force = TRUE) |>
         httr2::req_method("PUT") |>
         httr2::req_perform() |>
@@ -139,9 +139,10 @@ Collection <- R6::R6Class(
                       optimizer_config = NULL,
                       quantization_config = NULL,
                       timeout = 10L) {
+
       # private$.req |>
       #   httr2::req_url_path_append(name) |>
-      #   httr2::req_url_query(timeout = timeout) |>
+      #   httr2::req_url_query(timeout = checkmate::asInt(timeout)) |>
       #   httr2::req_body_json(config, force = TRUE) |>
       #   httr2::req_method("PATCH") |>
       #   httr2::req_perform() |>
@@ -153,7 +154,9 @@ Collection <- R6::R6Class(
     #' @param name string. Collection name
     #'
     delete = function(name) {
+
       checkmate::assert_string(name, min.chars = 1L)
+
       private$.req |>
         httr2::req_url_path_append(name) |>
         httr2::req_method("DELETE") |>
@@ -165,7 +168,9 @@ Collection <- R6::R6Class(
     #' @param name string. Collection name
     #'
     exists = function(name) {
+
       checkmate::assert_string(name, min.chars = 1L)
+
       private$.req |>
         httr2::req_url_path_append(name) |>
         httr2::req_url_path_append("exists") |>
@@ -177,7 +182,9 @@ Collection <- R6::R6Class(
     #' @param name string. Collection name
     #'
     info = function(name) {
+
       checkmate::assert_string(name, min.chars = 1L)
+
       private$.req |>
         httr2::req_url_path_append(name) |>
         httr2::req_perform() |>
@@ -197,6 +204,7 @@ Alias <- R6::R6Class(
         httr2::req_url_path_append("aliases")
       },
     update = function(...) {
+
       actions <- list(...)
       actions <- lapply(actions, checkmate::assert_class, classes = c("operation", "alias"))
 

@@ -1,14 +1,18 @@
 #' @title Collection
 #'
 #' @description
-#' Creates an Collection class
-#'
+#' Creates a Collection class
+#' Initializes the Collection class with a request object (req)
 #' @export
 #'
 Collection <- R6::R6Class(
   classname = "Collection",
   public = list(
     alias = NULL,
+
+    #' @description
+    #' This is the constructor method, automatically called when a new object of the Collection class is created.
+    #'
     initialize = function(req) {
       private$.req <- req |>
         httr2::req_url_path_append("collections")
@@ -29,7 +33,20 @@ Collection <- R6::R6Class(
     #' @description
     #' ...
     #' @param name string. Collection name
-    #'
+    #' shard_number int. Number of shards the collection should be split into.
+    #' @param sharding_method string. The method used for sharding (e.g., "auto" or "custom").
+    #' @param replication_factor integer. Indicates the number of replicas to create for fault tolerance.
+    #' @param write_consistency_factor integer. Specifies the number of replicas that must acknowledge a write operation. 
+    #' @param read_fan_out_factor integer. The number of replicas to read from simultaneously to fulfill a read request. 
+    #' @param on_disk_payload logical. A flag indicating whether to store payload data on disk
+    #' @param sparse_vectors config. Configuration object for handling sparse vectors within the collection.
+    #' @param hnsw_config: config. Configuration object for the HNSW (Hierarchical Navigable Small World) algorithm used in the collection.
+    #' @param optimizer_config: config. Configuration object for the optimizer managing the collection’s index.
+    #' @param wal_config: config. Configuration object for the Write-Ahead Log (WAL) ensuring data integrity.
+    #' @param quantization_config: config. Configuration object for vector quantization within the collection.
+    #' @param init_from: string. Path or reference to initialize the collection from an existing source.
+    #' @param timeout: integer. The maximum time, in seconds, to wait for the operation to complete.
+    
     create = function(name,
                       ...,
                       shard_number = NULL,
@@ -129,7 +146,7 @@ Collection <- R6::R6Class(
     },
     #' @description
     #' ...
-    #' @param name string. Collection name
+    #' @param name string. The name of the collection to be updated.
     #'
     update = function(name,
                       ...,
@@ -151,7 +168,7 @@ Collection <- R6::R6Class(
     },
     #' @description
     #' ...
-    #' @param name string. Collection name
+    #' @param name string. The name of the collection to be deleted.
     #'
     delete = function(name) {
 
@@ -165,7 +182,7 @@ Collection <- R6::R6Class(
     },
     #' @description
     #' ...
-    #' @param name string. Collection name
+    #' @param name string. The name of the collection whose existence is being checked.
     #'
     exists = function(name) {
 
@@ -179,7 +196,7 @@ Collection <- R6::R6Class(
     },
     #' @description
     #' ...
-    #' @param name string. Collection name
+    #' @param name string.The name of the collection for which information is being retrieved.
     #'
     info = function(name) {
 
@@ -195,6 +212,12 @@ Collection <- R6::R6Class(
     .req = NULL
   )
 )
+
+
+#' @title Alias
+#'
+#' @description
+#' The Alias class manages aliases, which are alternate names or labels that can be used to refer to collections.
 
 Alias <- R6::R6Class(
   classname = "Alias",
@@ -220,6 +243,11 @@ Alias <- R6::R6Class(
     )
 )
 
+
+#' @title Cluster
+#'
+#' @description
+#' The Cluster class is a placeholder for managing clustering operations.
 Cluster <- R6::R6Class(
   classname = "Cluster",
   public = list(

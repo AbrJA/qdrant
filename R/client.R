@@ -12,9 +12,10 @@ Client <- R6::R6Class(
     collection = NULL,
     snapshot = NULL,
     #' @description
-    #' ...
-    #' @param url string. URL ...
-    #' @param api_key
+    #' This is the constructor method, automatically called when a new object of the Client class is created.
+    
+    #' @param url string. A parameter that takes the base URL for interacting with the API.
+    #' @param api_key string. An optional parameter for providing an API key if needed.
     #'
     initialize = function(url, api_key = NULL) {
       checkmate::assertString(url, min.chars = 1L)
@@ -28,7 +29,7 @@ Client <- R6::R6Class(
       self$snapshot <- Snapshot$new(private$.req)
     },
     #' @description
-    #' ...
+    #' Retrieves a list of aliases from the API.
     #'
     aliases = function() {
       private$.req |>
@@ -37,7 +38,7 @@ Client <- R6::R6Class(
         httr2::resp_body_json()
     },
     #' @description
-    #' ...
+    #' Retrieves a list of collections from the API.
     #'
     collections = function() {
       private$.req |>
@@ -46,7 +47,7 @@ Client <- R6::R6Class(
         httr2::resp_body_json()
     },
     #' @description
-    #' ...
+    #' Retrieves a list of snapshots from the API.
     #'
     snapshots = function() {
       private$.req |>
@@ -55,7 +56,7 @@ Client <- R6::R6Class(
         httr2::resp_body_json()
     },
     #' @description
-    #' ...
+    #' Retrieves information about the cluster.
     #'
     cluster = function() {
       private$.req |>
@@ -64,14 +65,14 @@ Client <- R6::R6Class(
         httr2::resp_body_json()
     },
     #' @description
-    #' ...
+    #' Retrieves general server information.
     #'
     info = function() {
       private$.req |>
         httr2::req_perform() |>
         httr2::resp_body_json()
     },
-    #' @description
+    #' Retrieves telemetry data.
     #' ...
     #'
     telemetry = function() {
@@ -81,7 +82,7 @@ Client <- R6::R6Class(
         httr2::resp_body_json()
     },
     #' @description
-    #' ...
+    #' Retrieves metrics in a text format.
     #'
     metrics = function() {
       private$.req |>
@@ -90,7 +91,7 @@ Client <- R6::R6Class(
         httr2::resp_body_string()
     },
     #' @description
-    #' ...
+    #' Retrieves information about locks.
     #'
     # Add SET POST option
     locks = function() {
@@ -100,7 +101,7 @@ Client <- R6::R6Class(
         httr2::resp_body_json()
     },
     #' @description
-    #' ...
+    #'  Checks the health status of the server.
     #'
     healthz = function() {
       private$.req |>
@@ -109,7 +110,7 @@ Client <- R6::R6Class(
         httr2::resp_body_string()
     },
     #' @description
-    #' ...
+    #' Checks if the server is live.
     #'
     livez = function() {
       private$.req |>
@@ -118,7 +119,7 @@ Client <- R6::R6Class(
         httr2::resp_body_string()
     },
     #' @description
-    #' ...
+    #' Checks if the server is ready.
     #'
     readyz = function() {
       private$.req |>

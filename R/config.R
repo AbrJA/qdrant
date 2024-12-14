@@ -1,12 +1,15 @@
 #' @description Config of HNSW index
 #' @param m integer. Number of edges per node in the index graph. Larger the value - more accurate the search, more space required. Default to NULL.
-#' @param ef_construct
-#' @param full_scan_threshold max_indexing_threads
-#' @param on_disk
-#' @param payload_m
+#' @param ef_construct integer. The size of the dynamic list used during index construction.
+#' @param full_scan_threshold  integer. The threshold at which a full scan is triggered.
+#' @param max_indexing_threads integer. The maximum number of threads to be used during the indexing process. 
+#' @param on_disk logical. If TRUE, stores the index on disk to save memory. Defaults to NULL.
+#' @param payload_m integer. Defines how much payload information is stored in the graph nodes.
 #'
 #' @export
 #'
+
+
 hnsw <- function(m,
                  ef_construct,
                  full_scan_threshold,
@@ -42,6 +45,11 @@ hnsw <- function(m,
 
 #' @export
 #'
+#' @description Creates a configuration for scalar quantization.
+
+#' @param type string. Type of quantization to apply. Only "int8" is supported.
+#' @param quantile numeric. A value between 0.5 and 1.0 that defines the quantization threshold.
+#' @param always_ram logical. If TRUE, ensures that the scalar data is always kept in RAM.
 scalar <- function(type = c("int8"), quantile = NULL, always_ram = NULL) {
   config <- list()
 
@@ -63,6 +71,11 @@ scalar <- function(type = c("int8"), quantile = NULL, always_ram = NULL) {
 
 #' @export
 #'
+#' @description Creates a configuration for product quantization.
+
+#' @param compression string. The compression level to apply.
+#' @param always_ram logical. If TRUE, keeps the quantized data always in RAM.
+
 product <- function(compression = c("x4", "x8", "x16", "x32", "x64"), always_ram = NULL) {
   config <- list()
 
@@ -92,6 +105,17 @@ binary <- function(always_ram = NULL) {
 
 #' @export
 #'
+#' @description Creates a configuration for optimizing the storage and retrieval of vectors.
+
+#' @param deleted_threshold numeric. Value between 0.0 and 1.0 that determines when to trigger garbage collection.
+#' @param vacuum_min_vector_number integer. Minimum number of vectors required to trigger a vacuum operation.
+#' @param default_segment_number integer. The default number of segments in the index.
+#' @param max_segment_size integer. The maximum size a segment can grow to before triggering a split or optimization. 
+#' @param memmap_threshold integer. Threshold for memory-mapped storage. Vectors smaller than this threshold are kept in RAM, and larger ones are stored on disk. 
+#' @param indexing_threshold integer. Minimum number of vectors required before indexing starts.
+#' @param flush_interval_sec integer. Time interval in seconds for flushing the data to disk.
+#' @param max_optimization_threads integer. Maximum number of threads to use for optimization tasks.
+
 optimizer <- function(deleted_threshold,
                       vacuum_min_vector_number,
                       default_segment_number,
@@ -138,7 +162,10 @@ optimizer <- function(deleted_threshold,
 }
 
 #' @export
-#'
+#' Creates a configuration for the Write-Ahead Log (WAL)
+#' @param wal_capacity_mb integer. The capacity of the WAL in megabytes.
+#' @param wal_segments_ahead integer. Number of WAL segments that are kept ahead of the current segment to ensure smooth logging.
+
 wal <- function(wal_capacity_mb, wal_segments_ahead) {
   config <- list()
 
@@ -152,7 +179,9 @@ wal <- function(wal_capacity_mb, wal_segments_ahead) {
 }
 
 #' @export
-#'
+#' Creates a configuration for handling multi-vector comparisons, which might be necessary for complex similarity searches.
+#' @param comparator string, The comparison method used for multi-vector comparison. 
+
 multivector <- function(comparator = c("max_sim")) {
   config <- list()
 
@@ -192,7 +221,11 @@ params <- function(replication_factor = NULL,
 }
 
 #' @export
-#'
+#'  Creates a configuration for general collection parameters, such as replication and consistency factors.
+#' @param replication_factor integer. The number of copies of data to be kept across different nodes.
+#' @param write_consistency_factor integer. Number of replicas that must acknowledge a write operation before it is considered successful. 
+#' @param read_fan_out_factor integer. The number of replicas to query simultaneously when reading data.
+#' @param on_disk_payload logical. If TRUE, stores payload data on disk. 
 print.config <- function(object, indent = 1L, first = TRUE) {
   if (first) {
     cat("<Config>\n")
